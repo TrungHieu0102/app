@@ -1,0 +1,22 @@
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f0f0f0;
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.pomodoro-container {
+  text-align: center;
+  padding: 20px;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+.timer {
+  margin: 20px 0;
+}
