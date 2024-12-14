@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Typography, Box, IconButton, Modal, TextField } from "@mui/material";
+import { Typography, Box, IconButton, Modal, TextField, useMediaQuery } from "@mui/material";
 import SettingsSuggestIcon from "@mui/icons-material/SettingsSuggest";
 import { AwesomeButton } from "react-awesome-button";
 import "react-awesome-button/dist/styles.css";
@@ -34,7 +34,8 @@ const Header: React.FC<HeaderProps> = ({
     handleClose();
   };
 
-  // Định nghĩa style cho nút "Lưu"
+  // Responsive styling using useMediaQuery
+  const isMobile = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const buttonStyle = {
     "--button-primary-color": containerColor,
     "--button-primary-color-dark": containerColor,
@@ -45,7 +46,7 @@ const Header: React.FC<HeaderProps> = ({
     "--button-border-radius": "8px",
     "--button-hover-color": "#fff",
     "--button-height": "60px",
-    "--button-font-size": "1.2rem",
+    "--button-font-size": isMobile ? "1rem" : "1.2rem", // Adjust button size for mobile
   } as React.CSSProperties;
 
   return (
@@ -55,10 +56,10 @@ const Header: React.FC<HeaderProps> = ({
         padding: "20px",
         backgroundColor: containerColor,
         display: "flex",
-        justifyContent: "center",
+        justifyContent: isMobile ? "space-between" : "center",  // Adjust alignment for mobile
         alignItems: "center",
         transition: "background-color 0.5s ease",
-        gap: "200px",
+        gap: isMobile ? "10px" : "200px",  // Adjust gap for mobile
       }}
     >
       <Typography
@@ -67,6 +68,7 @@ const Header: React.FC<HeaderProps> = ({
           fontWeight: "bold",
           color: "white",
           padding: "10px 20px",
+          fontSize: isMobile ? "1.5rem" : "2rem",  // Adjust font size for mobile
         }}
       >
         POMOFOCUS
@@ -87,7 +89,7 @@ const Header: React.FC<HeaderProps> = ({
         <SettingsSuggestIcon
           sx={{
             color: "white",
-            fontSize: 40,
+            fontSize: isMobile ? 30 : 40,  // Adjust icon size for mobile
           }}
         />
       </IconButton>
@@ -103,7 +105,7 @@ const Header: React.FC<HeaderProps> = ({
             padding: 4,
             borderRadius: 2,
             boxShadow: 24,
-            width: 350,
+            width: isMobile ? "80%" : 350,
             transition: "background-color 0.3s ease",
             overflow: "hidden",
           }}
