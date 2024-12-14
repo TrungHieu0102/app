@@ -6,6 +6,7 @@ interface ControlsProps {
   startStopTimer: () => void;
   resetTimer: () => void;
   containerColor: string;
+  skipToNextSession: () => void;  
 }
 
 const Controls: React.FC<ControlsProps> = ({
@@ -13,6 +14,7 @@ const Controls: React.FC<ControlsProps> = ({
   startStopTimer,
   resetTimer,
   containerColor,
+  skipToNextSession, 
 }) => {
   return (
     <div style={{ marginTop: 20, display: "flex", gap: "8px" }}>
@@ -64,6 +66,31 @@ const Controls: React.FC<ControlsProps> = ({
         }}
       >
         Reset
+      </Button>
+      <Button
+        onClick={skipToNextSession}  
+        sx={{
+          border: `2px solid ${containerColor}`,
+          backgroundColor: "white",
+          color: containerColor,
+          boxShadow: "none",
+          padding: "12px 24px",
+          fontSize: "1.2rem",
+          borderRadius: "8px",
+
+          "&:hover": {
+            backgroundColor: "white",
+            color: containerColor,
+            border: `2px solid ${containerColor}`,
+          },
+          "&:active": {
+            backgroundColor: "white",
+            color: containerColor,
+            border: `2px solid ${containerColor}`,
+          },
+        }}
+      >
+        Skip
       </Button>
     </div>
   );

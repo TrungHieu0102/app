@@ -1,4 +1,3 @@
-// App.tsx
 import React from "react";
 import { Container, CssBaseline, Paper, LinearProgress } from "@mui/material";
 import TimerDisplay from "./components/TimerDisplay";
@@ -9,12 +8,20 @@ import useTimer from "./hooks/useTimer";
 
 const App: React.FC = () => {
   const TIME_SETTINGS = {
-    pomodoro: 25 * 600,
-    shortBreak: 5 * 60,
-    longBreak: 15 * 60,
+    pomodoro: 1 , 
+    shortBreak: 1 , 
+    longBreak: 15 , 
   };
 
-  const { timeLeft, sessionType, isRunning, startStopTimer, resetTimer, changeSessionType } = useTimer(TIME_SETTINGS);
+  const {
+    timeLeft,
+    sessionType,
+    isRunning,
+    startStopTimer,
+    resetTimer,
+    changeSessionType,
+    skipToNextSession, 
+  } = useTimer(TIME_SETTINGS);
 
   const containerColors = {
     pomodoro: "#BA4949",
@@ -92,6 +99,7 @@ const App: React.FC = () => {
             startStopTimer={startStopTimer}
             resetTimer={resetTimer}
             containerColor={containerColor}
+            skipToNextSession={skipToNextSession} 
           />
         </Paper>
       </Container>
