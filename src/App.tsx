@@ -1,16 +1,22 @@
 import React, { useState } from "react";
-import { Container, CssBaseline, Paper, LinearProgress } from "@mui/material";
+import {
+  Container,
+  CssBaseline,
+  Paper,
+  CircularProgress,
+  Box,
+} from "@mui/material";
 import TimerDisplay from "./components/TimerDisplay";
 import Controls from "./components/Controls";
 import SessionSelector from "./components/SessionSelector";
 import Header from "./components/Header";
-import SessionCount from "./components/SessionCount"; // Import SessionCount
+import SessionCount from "./components/SessionCount";
 import useTimer from "./hooks/useTimer";
 
 const App: React.FC = () => {
   const [timeSettings, setTimeSettings] = useState({
     pomodoro: 25 * 60,
-    shortBreak: 5*60,
+    shortBreak: 5 * 60,
     longBreak: 15 * 60,
   });
 
@@ -45,7 +51,11 @@ const App: React.FC = () => {
   const totalTime = timeSettings[sessionType];
   const progress = ((totalTime - timeLeft) / totalTime) * 100;
 
-  const handleSettingsChange = (newSettings: { pomodoro: number; shortBreak: number; longBreak: number }) => {
+  const handleSettingsChange = (newSettings: {
+    pomodoro: number;
+    shortBreak: number;
+    longBreak: number;
+  }) => {
     setTimeSettings(newSettings);
   };
 
@@ -65,21 +75,11 @@ const App: React.FC = () => {
           transition: "background-color 0.5s ease",
         }}
       >
-        <Header containerColor={containerColor} onSettingsChange={handleSettingsChange} />
-        <LinearProgress
-          variant="determinate"
-          value={progress}
-          sx={{
-            width: "100%",
-            maxWidth: 600,
-            marginTop: 2,
-            marginBottom: 2,
-            backgroundColor: "rgba(255, 255, 255, 0.2)",
-            "& .MuiLinearProgress-bar": {
-              backgroundColor: "#ffffff",
-            },
-          }}
+        <Header
+          containerColor={containerColor}
+          onSettingsChange={handleSettingsChange}
         />
+
         <Paper
           elevation={0}
           sx={{
@@ -92,16 +92,60 @@ const App: React.FC = () => {
             transition: "background-color 0.5s ease",
             width: "100%",
             maxWidth: 500,
+            position: "relative",
+            overflow: "hidden",
+            paddingBottom: 5,
+            textAlign: "center",
           }}
         >
           <SessionSelector
             sessionType={sessionType}
             changeSessionType={changeSessionType}
           />
-          <TimerDisplay
-            timeLeft={timeLeft}
-            isPomodoro={sessionType === "pomodoro"}
-          />
+          <Box
+            sx={{
+              position: "relative",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              width: 350,
+              height: 350,
+              borderRadius: "50%",
+              zIndex: 1,
+              marginBottom: 3,
+              marginTop: 3,
+            }}
+          >
+            <CircularProgress
+              variant="determinate"
+              value={100}
+              size={350}
+              sx={{
+                color: "rgba(255, 255, 255, 0.2)",
+                position: "absolute",
+                zIndex: 0,
+                thickness: 1,
+              }}
+            />
+
+            <CircularProgress
+              variant="determinate"
+              value={progress}
+              size={350}
+              sx={{
+                color: "#ffffff",
+                position: "absolute",
+                zIndex: 1,
+                thickness: 1,
+              }}
+            />
+
+            <TimerDisplay
+              timeLeft={timeLeft}
+              isPomodoro={sessionType === "pomodoro"}
+            />
+          </Box>
+
           <Controls
             isRunning={isRunning}
             startStopTimer={startStopTimer}

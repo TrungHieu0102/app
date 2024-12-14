@@ -23,6 +23,9 @@ importers:
       react:
         specifier: ^18.3.1
         version: 18.3.1
+      react-awesome-button:
+        specifier: ^7.0.5
+        version: 7.0.5
       react-dom:
         specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
@@ -482,6 +485,9 @@ packages:
 
   '@popperjs/core@2.11.8':
     resolution: {integrity: sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==}
+
+  '@rcaferati/wac@1.0.0':
+    resolution: {integrity: sha512-7dVbzvcfL9o4UnrCaNeoIs7Ri9Ol+OMfpYYCJJV1dfm+5+pVM6DrvFjPzqifd2ACVABpXmwTQKy9KFxNm/7IdA==}
 
   '@rollup/rollup-android-arm-eabi@4.28.1':
     resolution: {integrity: sha512-2aZp8AES04KI2dy3Ss6/MDjXbwBzj+i0GqKtWXgw2/Ma6E4jJvujryO6gJAghIRVz7Vwr9Gtl/8na3nDUKpraQ==}
@@ -1135,6 +1141,9 @@ packages:
   queue-microtask@1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
 
+  react-awesome-button@7.0.5:
+    resolution: {integrity: sha512-pNABRQsvnbd5rGL7mX9udWa0aPnXtP6hEL90/Cqjc/ERADpOMu3z6zix+AW/NOBp0NQoi9J+hhKoZS2dabs15g==}
+
   react-dom@18.3.1:
     resolution: {integrity: sha512-5m4nQKp+rZRb09LNH59GM4BxTh9251/ylbKIbpe7TpGxfJ+9kv6BLkLBXIjjspbgbnIBNqlI23tRnTWT0snUIw==}
     peerDependencies:
@@ -1689,6 +1698,8 @@ snapshots:
       fastq: 1.17.1
 
   '@popperjs/core@2.11.8': {}
+
+  '@rcaferati/wac@1.0.0': {}
 
   '@rollup/rollup-android-arm-eabi@4.28.1':
     optional: true
@@ -2314,6 +2325,10 @@ snapshots:
   punycode@2.3.1: {}
 
   queue-microtask@1.2.3: {}
+
+  react-awesome-button@7.0.5:
+    dependencies:
+      '@rcaferati/wac': 1.0.0
 
   react-dom@18.3.1(react@18.3.1):
     dependencies:

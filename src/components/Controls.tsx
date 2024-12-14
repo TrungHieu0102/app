@@ -1,12 +1,13 @@
 import React from "react";
-import { Button } from "@mui/material";
+import { AwesomeButton } from "react-awesome-button";
+import "react-awesome-button/dist/styles.css";
 
 interface ControlsProps {
   isRunning: boolean;
   startStopTimer: () => void;
   resetTimer: () => void;
   containerColor: string;
-  skipToNextSession: () => void;  
+  skipToNextSession: () => void;
 }
 
 const Controls: React.FC<ControlsProps> = ({
@@ -14,84 +15,49 @@ const Controls: React.FC<ControlsProps> = ({
   startStopTimer,
   resetTimer,
   containerColor,
-  skipToNextSession, 
+  skipToNextSession,
 }) => {
+  const buttonStyle = {
+    "--button-primary-color": containerColor,
+    "--button-primary-color-dark": containerColor,
+    "--button-hover-pressure": "2",
+    "--button-primary-color-active": containerColor, 
+    "--button-raise-level": "10px",
+    "--button-primary-color-hover": `${containerColor}`,
+    "--button-border-radius": "8px",
+    "--button-hover-color": "#fff",
+    "--button-height": "60px",
+    "--button-font-size": "1.2rem",
+  } as React.CSSProperties;
+
   return (
-    <div style={{ marginTop: 20, display: "flex", gap: "8px" }}>
-      <Button
-        onClick={startStopTimer}
-        sx={{
-          border: `2px solid ${containerColor}`,
-          backgroundColor: "white",
-          color: containerColor,
-          boxShadow: "none",
-          padding: "12px 24px",
-          fontSize: "1.2rem",
-          borderRadius: "8px",
-          "&:hover": {
-            backgroundColor: "white",
-            color: containerColor,
-            border: `2px solid ${containerColor}`,
-          },
-          "&:active": {
-            backgroundColor: "white",
-            color: containerColor,
-            border: `2px solid ${containerColor}`,
-          },
-        }}
+    <div style={{ marginTop: 20, display: "flex", gap: "16px" }}>
+      <AwesomeButton
+        type="primary"
+        onPress={startStopTimer}
+        style={buttonStyle}
+        size="small"
       >
         {isRunning ? "Pause" : "Start"}
-      </Button>
-      <Button
-        onClick={resetTimer}
-        sx={{
-          border: `2px solid ${containerColor}`,
-          backgroundColor: "white",
-          color: containerColor,
-          boxShadow: "none",
-          padding: "12px 24px",
-          fontSize: "1.2rem",
-          borderRadius: "8px",
+      </AwesomeButton>
 
-          "&:hover": {
-            backgroundColor: "white",
-            color: containerColor,
-            border: `2px solid ${containerColor}`,
-          },
-          "&:active": {
-            backgroundColor: "white",
-            color: containerColor,
-            border: `2px solid ${containerColor}`,
-          },
-        }}
+      <AwesomeButton
+        size="small"
+        type="primary"
+        onPress={resetTimer}
+        style={buttonStyle}
       >
         Reset
-      </Button>
-      <Button
-        onClick={skipToNextSession}  
-        sx={{
-          border: `2px solid ${containerColor}`,
-          backgroundColor: "white",
-          color: containerColor,
-          boxShadow: "none",
-          padding: "12px 24px",
-          fontSize: "1.2rem",
-          borderRadius: "8px",
+      </AwesomeButton>
 
-          "&:hover": {
-            backgroundColor: "white",
-            color: containerColor,
-            border: `2px solid ${containerColor}`,
-          },
-          "&:active": {
-            backgroundColor: "white",
-            color: containerColor,
-            border: `2px solid ${containerColor}`,
-          },
-        }}
+      <AwesomeButton
+        size="small"
+        type="primary"
+        onPress={skipToNextSession}
+        style={buttonStyle}
       >
         Skip
-      </Button>
+      </AwesomeButton>
     </div>
   );
 };
