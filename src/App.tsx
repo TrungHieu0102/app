@@ -1,17 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container, CssBaseline, Paper, LinearProgress } from "@mui/material";
 import TimerDisplay from "./components/TimerDisplay";
 import Controls from "./components/Controls";
 import SessionSelector from "./components/SessionSelector";
 import Header from "./components/Header";
+import SessionCount from "./components/SessionCount"; // Import SessionCount
 import useTimer from "./hooks/useTimer";
 
 const App: React.FC = () => {
-  const TIME_SETTINGS = {
-    pomodoro: 1 , 
-    shortBreak: 1 , 
-    longBreak: 15 , 
-  };
+  const [timeSettings, setTimeSettings] = useState({
+    pomodoro: 25 * 60,
+    shortBreak: 5*60,
+    longBreak: 15 * 60,
+  });
 
   const {
     timeLeft,
@@ -20,8 +21,11 @@ const App: React.FC = () => {
     startStopTimer,
     resetTimer,
     changeSessionType,
-    skipToNextSession, 
-  } = useTimer(TIME_SETTINGS);
+    skipToNextSession,
+    pomodoroCount,
+    shortBreakCount,
+    longBreakCount,
+  } = useTimer(timeSettings);
 
   const containerColors = {
     pomodoro: "#BA4949",
@@ -38,8 +42,12 @@ const App: React.FC = () => {
   const containerColor = containerColors[sessionType];
   const paperColor = paperColors[sessionType];
 
-  const totalTime = TIME_SETTINGS[sessionType];
+  const totalTime = timeSettings[sessionType];
   const progress = ((totalTime - timeLeft) / totalTime) * 100;
+
+  const handleSettingsChange = (newSettings: { pomodoro: number; shortBreak: number; longBreak: number }) => {
+    setTimeSettings(newSettings);
+  };
 
   return (
     <>
@@ -57,7 +65,7 @@ const App: React.FC = () => {
           transition: "background-color 0.5s ease",
         }}
       >
-        <Header containerColor={containerColor} />
+        <Header containerColor={containerColor} onSettingsChange={handleSettingsChange} />
         <LinearProgress
           variant="determinate"
           value={progress}
@@ -99,9 +107,15 @@ const App: React.FC = () => {
             startStopTimer={startStopTimer}
             resetTimer={resetTimer}
             containerColor={containerColor}
-            skipToNextSession={skipToNextSession} 
+            skipToNextSession={skipToNextSession}
           />
         </Paper>
+
+        <SessionCount
+          pomodoroCount={pomodoroCount}
+          shortBreakCount={shortBreakCount}
+          longBreakCount={longBreakCount}
+        />
       </Container>
     </>
   );

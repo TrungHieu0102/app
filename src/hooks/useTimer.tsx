@@ -1,4 +1,3 @@
-// hooks/useTimer.tsx
 import { useState, useEffect, useMemo } from "react";
 
 type TimeSettings = Record<string, number>;
@@ -8,8 +7,14 @@ const useTimer = (TIME_SETTINGS: TimeSettings) => {
   const [timeLeft, setTimeLeft] = useState<number>(TIME_SETTINGS.pomodoro);
   const [sessionType, setSessionType] = useState<"pomodoro" | "shortBreak" | "longBreak">("pomodoro");
   const [pomodoroCount, setPomodoroCount] = useState<number>(0); 
+  const [shortBreakCount, setShortBreakCount] = useState<number>(0);
+  const [longBreakCount, setLongBreakCount] = useState<number>(0);
 
   const alarmSound = useMemo(() => new Audio("/alarm.mp3"), []);
+
+  useEffect(() => {
+    setTimeLeft(TIME_SETTINGS[sessionType]);
+  }, [TIME_SETTINGS, sessionType]);
 
   useEffect(() => {
     let interval: NodeJS.Timeout | null = null;
@@ -32,10 +37,12 @@ const useTimer = (TIME_SETTINGS: TimeSettings) => {
                 if (pomodoroCount === 3) {
                   setSessionType("longBreak");
                   setTimeLeft(TIME_SETTINGS.longBreak);
+                  setLongBreakCount(longBreakCount + 1); 
                   setPomodoroCount(0); 
                 } else {
                   setSessionType("shortBreak");
                   setTimeLeft(TIME_SETTINGS.shortBreak);
+                  setShortBreakCount(shortBreakCount + 1); 
                   setPomodoroCount(pomodoroCount + 1); 
                 }
                 break;
@@ -58,7 +65,7 @@ const useTimer = (TIME_SETTINGS: TimeSettings) => {
     return () => {
       if (interval) clearInterval(interval);
     };
-  }, [isRunning, sessionType, pomodoroCount, alarmSound, TIME_SETTINGS]);
+  }, [isRunning, sessionType, pomodoroCount, shortBreakCount, longBreakCount, alarmSound, TIME_SETTINGS]);
 
   const startStopTimer = () => setIsRunning(!isRunning);
 
@@ -79,10 +86,12 @@ const useTimer = (TIME_SETTINGS: TimeSettings) => {
         if (pomodoroCount === 3) {
           setSessionType("longBreak");
           setTimeLeft(TIME_SETTINGS.longBreak);
+          setLongBreakCount(longBreakCount + 1); 
           setPomodoroCount(0);
         } else {
           setSessionType("shortBreak");
           setTimeLeft(TIME_SETTINGS.shortBreak);
+          setShortBreakCount(shortBreakCount + 1); 
           setPomodoroCount(pomodoroCount + 1);
         }
         break;
@@ -97,7 +106,18 @@ const useTimer = (TIME_SETTINGS: TimeSettings) => {
     }
   };
 
-  return { timeLeft, sessionType, isRunning, startStopTimer, resetTimer, changeSessionType, skipToNextSession };
+  return {
+    timeLeft,
+    sessionType,
+    isRunning,
+    startStopTimer,
+    resetTimer,
+    changeSessionType,
+    skipToNextSession,
+    pomodoroCount,
+    shortBreakCount,
+    longBreakCount,
+  };
 };
 
 export default useTimer;
